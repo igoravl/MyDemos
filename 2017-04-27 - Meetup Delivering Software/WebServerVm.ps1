@@ -130,13 +130,13 @@ Configuration VmConfiguration {
 $vmcreds = New-Object System.Management.Automation.PSCredential($VmAdminUserName, $VmAdminPassword)
 
 HostConfiguration @PSBoundParameters
-Start-DscConfiguration -Path .\HostConfiguration -Force -Wait
+Start-DscConfiguration -Path "$PSScriptRoot\HostConfiguration" -Force -Wait
 
 $ipAddress = (Get-VMNetworkAdapter -VMName $VmName).IpAddresses[0]
 Set-Item wsman:\localhost\Client\TrustedHosts -Value $ipAddress -Force
 
 $cimSession = New-CimSession -ComputerName $ipAddress -Credential $vmcreds
-Set-DscLocalConfigurationManager -CimSession $cimSession -Path .\VmConfiguration
+Set-DscLocalConfigurationManager -CimSession $cimSession -Path "$PSScriptRoot\VmConfiguration"
 
 VmConfiguration -VmName $VmName -VmIpAddress $ipAddress
-Start-DscConfiguration -Path .\VmConfiguration -Force -Wait -CimSession $cimSession
+Start-DscConfiguration -Path "$PSScriptRoot\VmConfiguration" -Force -Wait -CimSession $cimSession
