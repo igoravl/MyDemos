@@ -135,6 +135,8 @@ Start-DscConfiguration -Path "$PSScriptRoot\HostConfiguration" -Force -Wait
 $ipAddress = (Get-VMNetworkAdapter -VMName $VmName).IpAddresses[0]
 Set-Item wsman:\localhost\Client\TrustedHosts -Value $ipAddress -Force
 
+VmConfiguration -VmName $VmName -VmIpAddress $ipAddress
+
 $cimSession = New-CimSession -ComputerName $ipAddress -Credential $vmcreds
 Set-DscLocalConfigurationManager -CimSession $cimSession -Path "$PSScriptRoot\VmConfiguration"
 
