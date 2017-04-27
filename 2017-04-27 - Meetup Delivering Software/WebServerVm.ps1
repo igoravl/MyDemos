@@ -140,5 +140,4 @@ VmConfiguration -VmName $VmName -VmIpAddress $ipAddress
 $cimSession = New-CimSession -ComputerName $ipAddress -Credential $vmcreds
 Set-DscLocalConfigurationManager -CimSession $cimSession -Path "$PSScriptRoot\VmConfiguration"
 
-VmConfiguration -VmName $VmName -VmIpAddress $ipAddress
 Start-DscConfiguration -Path "$PSScriptRoot\VmConfiguration" -Force -Wait -CimSession $cimSession
