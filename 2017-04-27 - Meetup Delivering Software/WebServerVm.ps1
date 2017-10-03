@@ -53,6 +53,7 @@ Configuration HostConfiguration {
             Ensure      = 'Present'
             Name        = "Drive-C.vhd"
             Path        = "D:\VHD\$VmName"
+            Type        = 'Differencing'
             Generation  = 'vhd'
             ParentPath  = 'D:\VHD\Template\en-windows-server-2016-datacenter-base.vhd' 
             DependsOn = '[File]VhdDir'
