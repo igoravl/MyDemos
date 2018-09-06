@@ -1,0 +1,7 @@
+---
+hostname: 127.0.0.1
+port: '2222'
+username: vagrant
+ssh_key: D:/Projects/GitHub_Igor/MyDemos/2018-06-23_Interop360_InSpec/iis-config-tdd/.kitchen/kitchen-vagrant/default-ubuntu-1604/.vagrant/machines/default/virtualbox/private_key
+last_action: verify
+last_error: 
