@@ -1,0 +1,36 @@
+---
+driver:
+  name: azurerm
+  subscription_id: '630a091a-3a08-4b05-a9f7-1ee7b784c0ae'
+  location: 'Brazil South'
+  machine_size: 'Standard_D2_V2'
+
+provisioner:
+  name: chef_zero
+  retry_on_exit_code:
+    - 20
+    - 35
+  max_retries: 10
+  wait_for_retry: 180
+  client_rb:
+    exit_status: :enabled
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: windows2016
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2016-Datacenter:latest
+    transport:
+      name: winrm
+      elevated: true
+
+suites:
+  - name: default
+    run_list:
+      - recipe[iis_config_tdd::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
