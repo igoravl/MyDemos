@@ -3,7 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabrikamFiber.Web", "FabrikamFiber.Web\FabrikamFiber.Web.csproj", "{456D6BF0-21B0-4995-9D77-76FA13AD95DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabrikamFiber.Web.Tests", "FabrikamFiber.Web.Tests\FabrikamFiber.Web.Tests.csproj", "{2FE8E250-4218-4B31-AB23-D9B91ABD842B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabrikamFiber.Web.UITests", "FabrikamFiber.Web.UITests\FabrikamFiber.Web.UITests.csproj", "{7B9028A6-73A9-4CC3-BBA9-5CD129D6BEC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FabrikamFiber.Web.WebTests", "FabrikamFiber.Web.WebTests\FabrikamFiber.Web.WebTests.csproj", "{CD648A7E-1318-40DD-8F99-4EE53F2938EA}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{456D6BF0-21B0-4995-9D77-76FA13AD95DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456D6BF0-21B0-4995-9D77-76FA13AD95DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456D6BF0-21B0-4995-9D77-76FA13AD95DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456D6BF0-21B0-4995-9D77-76FA13AD95DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FE8E250-4218-4B31-AB23-D9B91ABD842B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FE8E250-4218-4B31-AB23-D9B91ABD842B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FE8E250-4218-4B31-AB23-D9B91ABD842B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FE8E250-4218-4B31-AB23-D9B91ABD842B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B9028A6-73A9-4CC3-BBA9-5CD129D6BEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9028A6-73A9-4CC3-BBA9-5CD129D6BEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9028A6-73A9-4CC3-BBA9-5CD129D6BEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9028A6-73A9-4CC3-BBA9-5CD129D6BEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD648A7E-1318-40DD-8F99-4EE53F2938EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD648A7E-1318-40DD-8F99-4EE53F2938EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD648A7E-1318-40DD-8F99-4EE53F2938EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD648A7E-1318-40DD-8F99-4EE53F2938EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
