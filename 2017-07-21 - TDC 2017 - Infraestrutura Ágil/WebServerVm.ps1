@@ -64,9 +64,9 @@ Configuration HostConfiguration {
             DependsOn = '[xVHD]VmVhd' ## Ensures the that VHD is created first
             Name = $VmName
             VhdPath = "D:\VHD\$VmName\Drive-C.vhd" ## To use the VHD that was created above
-            SwitchName = 'Internal Virtual Switch' ## Use an already built virtual switch called LabSwitch
+            SwitchName = 'Default Switch' ## Use an already built virtual switch called 'Default Switch'
             State = 'Running' ## When finished, start up the VM
-            Path = "D:\Hyper-V" ## Place the VM on the file system at C:VMs
+            Path = "D:\Hyper-V" ## Place the VM on the file system 
             Generation = 1 ## This will be an older generation VM
             StartupMemory = $MemorySize ## It will have 2GB of memory
             ProcessorCount = $ProcessorCount ## It will have a single processor
@@ -127,6 +127,8 @@ Configuration VmConfiguration {
         }
     }
 }
+
+$VmAdminPassword = ConvertTo-SecureString $VmAdminPassword -Force -AsPlainText
 
 $vmcreds = New-Object System.Management.Automation.PSCredential($VmAdminUserName, $VmAdminPassword)
 
