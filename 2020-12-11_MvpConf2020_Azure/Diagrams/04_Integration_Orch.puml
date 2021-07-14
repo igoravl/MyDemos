@@ -1,0 +1,106 @@
+@startuml
+!pragma revision 1
+
+title
+Diagrama de Arquitetura
+end title
+
+!define C4Puml https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
+
+!includeurl C4Puml/C4_Context.puml
+!includeurl C4Puml/C4_Container.puml
+!includeurl C4Puml/C4_Component.puml
+!includeurl AzurePuml/AzureC4Integration.puml
+!includeurl AzurePuml/AIMachineLearning/all.puml
+!includeurl AzurePuml/Analytics/all.puml
+!includeurl AzurePuml/Compute/all.puml
+!includeurl AzurePuml/Containers/all.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/DevOps/all.puml
+!includeurl AzurePuml/General/all.puml
+!includeurl AzurePuml/Identity/all.puml
+!includeurl AzurePuml/Integration/all.puml
+!includeurl AzurePuml/InternetOfThings/all.puml
+!includeurl AzurePuml/Management/all.puml
+!includeurl AzurePuml/Media/all.puml
+!includeurl AzurePuml/Mobile/all.puml
+!includeurl AzurePuml/Networking/all.puml
+!includeurl AzurePuml/Security/all.puml
+!includeurl AzurePuml/Storage/all.puml
+!includeurl AzurePuml/Web/all.puml
+
+LAYOUT_LEFT_RIGHT
+
+Person(devteam, "Devs Internos", "Desenvolve e testa APIs a serem disponibilizadas no Portal de API.")
+Person_Ext(Cliente, "Parceiros", "Clientes e Fornecedores que acessam as APIs públicas")
+
+Container_Boundary(azBoundary, "Azure") {
+    AzureApplicationGateway(appgwDev, "APP-GW-DEV", "1 instância, 10GB/mês", "Web Application Firewall")
+    Container_Boundary(vnetDev, "VNet de Desenvolvimento") {
+        AzureAPIManagement(apimDev, "API-DEV", "1 unidade x Developer", "API Gateway/Portal")
+        AzureKubernetesService(aksDev, "AKS-DEV", "DS2v2 x 2 VM", "Backend de Serviços")
+        AzureFunction(webDev, "APP-SVC-DEV", "1 instância x Basic B3", "Backend de Serviços")
+        AzureVPNGateway(vpnDev, "VPN-DEV", "", "VPN para acesso on-premises")
+        AzureApplicationInsights(aiDev, "AI-DEV", "", "Coleta de telemetria e logs")
+        AzureLogicApps(logicAppDev, "LOGIC-APP", "", "")
+        AzureServiceBus(svcBusDev, "SVC-BUS", "", "")
+    }
+    AzureApplicationGateway(appgwPrd, "APP-GW-PRD", "2 instâncias, 10GB/mês", "Web Application Firewall")
+    Container_Boundary(vnetPrd, "VNet de Produção") {
+        AzureAPIManagement(apimPrd, "API-PRD", "2 unidades x Premium", "API Gateway/Portal")
+        AzureKubernetesService(aksPrd, "AKS-PRD", "TBD", "Backend de Serviços")
+        AzureWebApp(webPrd, "APP-SVC-PRD", "2 instância x Premium P2V2", "Backend de Serviços")
+        AzureVPNGateway(vpnPrd, "VPN-PRD", "", "VPN para acesso on-premises")
+        AzureApplicationInsights(aiPrd, "AI-PRD", "", "Coleta de telemetria e logs")
+        AzureLogicApps(logicAppPrd, "LOGIC-APP", "", "")
+        AzureServiceBus(svcBusPrd, "SVC-BUS", "", "")
+    }
+}
+
+
+Enterprise_Boundary(onpremBoundary, "On-premises") {
+    Container_Boundary(onpremDev, "Ambiente de Desenvolvimento") {
+        System(onpremDevSvc, "Backend de serviços")
+    }
+    Container_Boundary(onpremPrd, "Ambiente de Produção") {
+        System(onpremPrdSvc, "Backend de serviços")
+    }
+}
+
+' Ambiente de desenvolvimento
+devteam --> appgwDev
+appgwDev --> apimDev
+apimDev --> logicAppDev
+apimDev -> aiDev
+apimDev --> vpnDev
+apimDev --> aksDev
+logicAppDev --> webDev
+logicAppDev --> aksDev
+logicAppDev --> vpnDev
+logicAppDev --> svcBusDev
+vpnDev --> onpremDevSvc
+aksDev --> vpnDev
+svcBusDev --> vpnDev
+webDev --> vpnDev
+
+' Ambiente de produção
+Cliente --> appgwPrd
+appgwPrd --> apimPrd
+apimPrd --> logicAppPrd
+apimPrd -> aiPrd
+apimPrd --> aksPrd
+apimPrd --> vpnPrd
+logicAppPrd --> webPrd
+logicAppPrd --> aksPrd
+logicAppPrd --> vpnPrd
+logicAppPrd --> svcBusPrd
+vpnPrd --> onpremPrdSvc
+aksPrd --> vpnPrd
+svcBusPrd --> vpnPrd
+webPrd --> vpnPrd
+
+@enduml

@@ -1,0 +1,70 @@
+@startuml
+!pragma revision 1
+
+title
+Diagrama de Arquitetura
+end title
+
+!define C4Puml https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
+
+!includeurl C4Puml/C4_Context.puml
+!includeurl C4Puml/C4_Container.puml
+!includeurl C4Puml/C4_Component.puml
+!includeurl AzurePuml/AzureC4Integration.puml
+!includeurl AzurePuml/AIMachineLearning/all.puml
+!includeurl AzurePuml/Analytics/all.puml
+!includeurl AzurePuml/Compute/all.puml
+!includeurl AzurePuml/Containers/all.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/DevOps/all.puml
+!includeurl AzurePuml/General/all.puml
+!includeurl AzurePuml/Identity/all.puml
+!includeurl AzurePuml/Integration/all.puml
+!includeurl AzurePuml/InternetOfThings/all.puml
+!includeurl AzurePuml/Management/all.puml
+!includeurl AzurePuml/Media/all.puml
+!includeurl AzurePuml/Mobile/all.puml
+!includeurl AzurePuml/Networking/all.puml
+!includeurl AzurePuml/Security/all.puml
+!includeurl AzurePuml/Storage/all.puml
+!includeurl AzurePuml/Web/all.puml
+
+LAYOUT_LEFT_RIGHT
+
+Person_Ext(usr, "Usuários", "Acessam o portal para preencher um simulado")
+
+Container_Boundary(azBoundary, "Azure") {
+    AzureApplicationGateway(appgwPrd, "Application Gateway", "2 instâncias, 10GB/mês", "Web Application Firewall")
+    AzureDevOps(azdev, "Azure DevOps", "", "")
+    AzureKeyVault(kv, "KeyVault", "", "")
+    Container_Boundary(vnetPrd, "VNet de Produção") {
+        AzureKubernetesService(aksPrd, "Azure Kubernetes Service", "TBD", "Backend de Serviços")
+        AzureVPNGateway(vpnPrd, "VPN", "", "VPN para acesso on-premises")
+        AzureRedisCache(redis, "Redis", "", "")
+        AzureLogAnalytics(ai, "Log Analytics", "", "")
+    }
+}
+
+
+Enterprise_Boundary(onpremBoundary, "On-premises") {
+    Container_Boundary(onpremPrd, "Ambiente de Produção") {
+        System(oracleDb, "Oracle (on-premises)")
+    }
+}
+
+' Ambiente de produção
+usr --> appgwPrd
+vpnPrd --> oracleDb
+appgwPrd --> aksPrd
+aksPrd --> vpnPrd
+aksPrd -> redis
+ai <- aksPrd
+azdev 
+--> kv
+azdev --> vnetPrd
+
+@enduml
