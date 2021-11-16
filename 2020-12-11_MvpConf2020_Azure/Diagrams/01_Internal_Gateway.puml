@@ -1,0 +1,49 @@
+@startuml
+!pragma revision 1
+
+title
+Diagrama de Arquitetura - Gateway Interno
+end title
+
+!define C4Puml https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
+
+!includeurl C4Puml/C4_Context.puml
+!includeurl C4Puml/C4_Container.puml
+!includeurl C4Puml/C4_Component.puml
+!includeurl AzurePuml/AzureC4Integration.puml
+!includeurl AzurePuml/AIMachineLearning/all.puml
+!includeurl AzurePuml/Analytics/all.puml
+!includeurl AzurePuml/Compute/all.puml
+!includeurl AzurePuml/Containers/all.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/DevOps/all.puml
+!includeurl AzurePuml/General/all.puml
+!includeurl AzurePuml/Identity/all.puml
+!includeurl AzurePuml/Integration/all.puml
+!includeurl AzurePuml/InternetOfThings/all.puml
+!includeurl AzurePuml/Management/all.puml
+!includeurl AzurePuml/Media/all.puml
+!includeurl AzurePuml/Mobile/all.puml
+!includeurl AzurePuml/Networking/all.puml
+!includeurl AzurePuml/Security/all.puml
+!includeurl AzurePuml/Storage/all.puml
+!includeurl AzurePuml/Web/all.puml
+
+LAYOUT_LEFT_RIGHT
+
+Enterprise_Boundary(onpremBoundary, "Ambiente on-premises") {
+    Person(client, "Sistemas-clientes", "Sistemas que acessam as APIs")
+    Container_Boundary(onpremProd, "Ambiente de Produção") {
+        AzureAPIManagement(apim, "API-GW", "SKU: Gateway", "API Gateway/Portal")
+        System(onpremPrdSvc, "Backend de serviços")
+    }
+}
+
+client --> apim
+apim --> onpremPrdSvc
+
+@enduml

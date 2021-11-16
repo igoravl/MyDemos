@@ -16,7 +16,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            const string instrumentationKey = "** INSTRUMENTATION KEY HERE **";
+            const string instrumentationKey = "0a2a3172-506b-4b37-8473-cd17f7139766";
             const string metricNamespace = "MyNamespace";
             const string metricName = "Delayed processes";
             const int iterations = 100;

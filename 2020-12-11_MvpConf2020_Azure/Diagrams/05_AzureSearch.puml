@@ -1,0 +1,80 @@
+@startuml
+!pragma revision 1
+
+title
+Diagrama de Arquitetura
+end title
+
+!define C4Puml https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
+
+!includeurl C4Puml/C4_Context.puml
+!includeurl C4Puml/C4_Container.puml
+!includeurl C4Puml/C4_Component.puml
+!includeurl AzurePuml/AzureC4Integration.puml
+!includeurl AzurePuml/AIMachineLearning/all.puml
+!includeurl AzurePuml/Analytics/all.puml
+!includeurl AzurePuml/Compute/all.puml
+!includeurl AzurePuml/Containers/all.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/DevOps/all.puml
+!includeurl AzurePuml/General/all.puml
+!includeurl AzurePuml/Identity/all.puml
+!includeurl AzurePuml/Integration/all.puml
+!includeurl AzurePuml/InternetOfThings/all.puml
+!includeurl AzurePuml/Management/all.puml
+!includeurl AzurePuml/Media/all.puml
+!includeurl AzurePuml/Mobile/all.puml
+!includeurl AzurePuml/Networking/all.puml
+!includeurl AzurePuml/Security/all.puml
+!includeurl AzurePuml/Storage/all.puml
+!includeurl AzurePuml/Web/all.puml
+
+LAYOUT_LEFT_RIGHT
+
+Person(portal, "Portal Conexão Polos", "Acesso do portal às APIs de busca")
+Person_Ext(devs, "Desenvolvedores", "Time de desenvolvimento do portal, responsável pela construção das chamadas às APIs")
+
+Container_Boundary(azBoundary, "Azure") {
+    Container_Boundary(vnetDev, "Ambiente de Desenvolvimento") {
+        AzureAPIManagement(apimDev, "API Management", "", "")
+        AzureFunction(webDev, "API de Busca", "", "")
+        AzureKeyVault(keyDev, "KeyVault", "", "")
+        AzureSearch(cogDev, "Cognitive Search", "", "")
+        AzureApplicationInsights(aiDev, "App Insights", "", "")
+        AzureSqlDatabase(sqlDev, "Tabela de Notícias", "", "")
+        AzureStorage(stgDev, "Storage Account de Documentos", "", "")
+    }
+    Container_Boundary(vnetPrd, "Ambiente de Produção") {
+        AzureAPIManagement(apimProd, "API Management", "", "")
+        AzureFunction(webProd, "API de Busca", "", "")
+        AzureKeyVault(keyProd, "KeyVault", "", "")
+        AzureSearch(cogProd, "Cognitive Search", "", "")
+        AzureApplicationInsights(aiProd, "App Insights", "", "")
+        AzureSqlDatabase(sqlProd, "Tabela de Notícias", "", "")
+        AzureStorage(stgProd, "Storage Account de Documentos", "", "")
+    }
+}
+
+' Ambiente de desenvolvimento
+devs --> apimDev
+apimDev --> webDev
+webDev --> cogDev
+webDev -> keyDev
+webDev -> aiDev
+cogDev --> sqlDev
+cogDev --> stgDev
+
+' Ambiente de produção
+portal --> apimProd
+apimProd --> webProd
+webProd --> cogProd
+webProd -> keyProd
+webProd -> aiProd
+cogProd --> sqlProd
+cogProd --> stgProd
+
+@enduml
